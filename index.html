@@ -1325,8 +1325,8 @@
             btn.textContent = mostrandoFavoritos ? 'Mostrar Todos' : 'Meus Favoritos';
             btn.innerHTML = `<i class="fas fa-heart"></i> ${btn.textContent}`;
         }
-        // Filtro dinâmico enquanto digita
-        function liveFilterBooks() {
+            // Filtro dinâmico enquanto digita
+            function liveFilterBooks() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const filteredEbooks = ebooks.filter(book => 
                 book.title.toLowerCase().includes(searchTerm) ||
@@ -1518,6 +1518,7 @@
                 booksContainer.appendChild(bookCard);
             });
         }
+
         // Função para favoritar/desfavoritar
         function toggleFavorito(titulo, btn) {
             let favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
@@ -1648,6 +1649,7 @@
             closeModals();
             updateUserSection();
         });
+
         // Manipulação do formulário de login
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1682,12 +1684,13 @@
                 document.getElementById('userWelcome').style.display = 'none';
             }
             renderEbooks(); // Atualiza exibição dos botões de favorito
-    // Estilo para botão de favorito
-    const styleFav = document.createElement('style');
-    styleFav.innerHTML = `.btn-fav { background: none; border: none; cursor: pointer; font-size: 1.2rem; margin-left: 5px; transition: transform 0.2s; } .btn-fav:hover { transform: scale(1.2); }`;
-    document.head.appendChild(styleFav);
-        }
 
+            // Estilo para botão de favorito
+            const styleFav = document.createElement('style');
+            styleFav.innerHTML = `.btn-fav { background: none; border: none; cursor: pointer; font-size: 1.2rem;        margin-left: 5px; transition: transform 0.2s; } .btn-fav:hover { transform: scale(1.2); }`;
+            document.head.appendChild(styleFav);
+        }
+        
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             renderEbooks();
