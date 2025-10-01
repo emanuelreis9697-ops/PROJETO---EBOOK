@@ -431,8 +431,9 @@
             height: 40px;
             overflow: hidden;
             text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
+            display: -webkit-box; /*necessário para o efeito*/
+            -webkit-line-clamp: 2; /*limita a 2 linhas*/
+            line-clamp: 2; /* compatibilidade com padrão*/
             -webkit-box-orient: vertical;
             line-height: 1.2;
             font-size: 1rem;
