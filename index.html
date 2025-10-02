@@ -6,22 +6,24 @@
     <title>eBooks House - Leitura Sustentável</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Define variáveis de cores para serem usadas em todo o CSS, facilitando a manutenção do tema */
         :root {
-            --primary: #2e8b57;
-            --primary-light: #3cb371;
-            --primary-dark: #1f6b4a;
-            --secondary: #8fbc8f;
-            --accent: #936325;
-            --light: #f8f9fa;
-            --dark: #2c3e50;
-            --text: #2c2c2c;
+            --primary: #2e8b57;       /* Verde principal */
+            --primary-light: #3cb371; /* Verde claro */
+            --primary-dark: #1f6b4a;  /* Verde escuro */
+            --secondary: #8fbc8f;     /* Verde secundário/suave */
+            --accent: #936325;        /* Cor de destaque (dourado/marrom) */
+            --light: #f8f9fa;         /* Cor clara (quase branco) */
+            --dark: #2c3e50;          /* Cor escura (cinza azulado) */
+            --text: #2c2c2c;          /* Cor do texto principal */
         }
-        
+
+        /* Seletor universal (*) que reseta margens e preenchimentos e ajusta o modelo de caixa */
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box; /* Garante que padding e border não aumentem a largura/altura final do elemento */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Define a fonte padrão */
         }
         
         body {
@@ -339,7 +341,7 @@
         
         .books-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 20px;
             margin-top: 20px;
             min-height: 200px;
@@ -359,31 +361,15 @@
 
         .book-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 5px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            height: auto;
-            position: relative;
-            cursor: default;
-            box-sizing: border-box;
-            border: 1px solid #eee;
-            padding-bottom: 10px;
-            transition: all 0.3s;
-            background: #fff;
-            max-height: 100%;
-            overflow: hidden;
-            flex: 1 1 auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-sizing: border-box;
-            position: relative;
-            padding-bottom: 10px;
-            border: 1px solid #eee;
+            width: 150px;
+            min-width: 140px;
+            max-width: 200px;
         }
         
         .book-card:hover {
@@ -392,7 +378,7 @@
         }
         
         .book-cover {
-            height: 250px;
+            height: 120px;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -404,22 +390,23 @@
             box-sizing: border-box;
             border-bottom: 1px solid #eee;
             width: 100%;
-            max-height: 250px;
+            max-height: 120px;
             overflow: hidden;
             transition: background 0.3s;
         }
         
         .book-cover img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            aspect-ratio: 3/4;
+            object-fit: contain;
             transition: transform 0.3s ease;
         }
         
         .book-info {
             padding: 15px;
             flex: 1;
-            display: flex;
+            display: block;
             flex-direction: column;
             justify-content: space-between;
         }
@@ -470,24 +457,26 @@
             font-style: normal;
             margin-right: 5px;
             vertical-align: middle;
-            max-width: 100%;
+            max-width: 70%;
             box-sizing: border-box;
             display: flex;
         }
         
         .book-actions {
             display: flex;
-            justify-content: space-between;
-            margin-top: auto;
-            gap: 1px;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
             text-align: left;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }
         
         .btn {
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-size: 0.9rem;
+            padding: 3px 7px;
+            border-radius: 3px;
+            font-size: 0.72rem;
             cursor: pointer;
             border: none;
             transition: background 0.3s;
@@ -1378,8 +1367,9 @@
             document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Dados simulados de ebooks
-        const ebooks = [
+    // Array de objetos. Cada objeto representa um livro com suas propriedades (título, autor, capa, etc.).
+    // Isso serve como um "banco de dados" simulado no lado do cliente.
+    const ebooks = [
             {
                 title: "As 48 Leis do Poder", // Título do livro
                 author: "Robert Greene", // Autor do livro
@@ -1489,6 +1479,7 @@
 
         // Renderiza os ebooks na página
         function renderEbooks() {
+            /* Função principal que renderiza (desenha) todos os ebooks na página. */
             const booksContainer = document.getElementById('booksContainer');
             booksContainer.innerHTML = '';
             const userLogged = !!localStorage.getItem('userEmail');
@@ -1508,11 +1499,11 @@
                     <div class="book-info">
                         <div class="book-title">${book.title}</div>
                         <div class="book-author">${book.author}</div>
-                        <div class="book-genre">${book.genre}</div> 
+                        <div class="book-genre">${book.genre}</div>
                         <div class="book-actions">
                             <button class="btn btn-read" onclick="openReader('${book.readUrl}', '${book.title}')">Ler Online</button>
                             ${favBtn}
-                            <a href="${book.downloadUrl}" download="${book.title}.pdf" class="btn btn-download">Download</a>
+                            <a href="${book.downloadUrl}" download="${book.title}.pdf" class="btn btn-download">Download</a> 
                         </div>
                     </div>
                 `;
@@ -1522,15 +1513,16 @@
 
         // Função para favoritar/desfavoritar
         function toggleFavorito(titulo, btn) {
+            /* Função para adicionar ou remover um livro dos favoritos. */
             let favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
-            const idx = favoritos.indexOf(titulo);
-            if (idx === -1) {
+            const idx = favoritos.indexOf(titulo); // Procura o índice do título na lista.
+            if (idx === -1) { // Se não encontrou (índice -1), adiciona o livro.
                 favoritos.push(titulo);
-            } else {
+            } else { // Se encontrou, remove o livro.
                 favoritos.splice(idx, 1);
             }
             localStorage.setItem('favoritos', JSON.stringify(favoritos));
-            renderEbooks();
+            renderEbooks(); // Re-renderiza a lista de livros para atualizar o status do botão.
         }
 
         // Atualiza a seção do usuário com base no estado de login
